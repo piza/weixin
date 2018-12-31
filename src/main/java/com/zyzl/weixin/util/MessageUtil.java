@@ -83,7 +83,7 @@ public final class MessageUtil {
             }
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLEventReader reader = factory.createXMLEventReader(inputStream);
-            LOG.debug("has next"+reader.hasNext());
+//            LOG.debug("has next"+reader.hasNext());
 
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
@@ -91,7 +91,7 @@ public final class MessageUtil {
                 if (event.isStartElement()) {
                     String tagName = event.asStartElement().getName()
                             .toString();
-                    LOG.debug("tagName: "+tagName);
+//                    LOG.debug("tagName: "+tagName);
 
                     if("SendPicsInfo".equals(tagName)) {
                         map.put(tagName, eventSendPicsInfo(reader));
