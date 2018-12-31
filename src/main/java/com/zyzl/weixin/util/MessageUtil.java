@@ -84,7 +84,7 @@ public final class MessageUtil {
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLEventReader reader = factory.createXMLEventReader(inputStream);
 
-            LOG.debug(reader.getElementText());
+            LOG.debug(reader.toString());
 
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
