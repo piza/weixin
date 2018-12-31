@@ -83,8 +83,12 @@ public final class MessageUtil {
             }
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLEventReader reader = factory.createXMLEventReader(inputStream);
+
+            LOG.debug(reader.getElementText());
+
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
+
                 if (event.isStartElement()) {
                     String tagName = event.asStartElement().getName()
                             .toString();
