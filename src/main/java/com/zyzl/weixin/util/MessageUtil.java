@@ -106,10 +106,13 @@ public final class MessageUtil {
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace();
             LOG.error("IO出现异常", e);
         } catch (XMLStreamException e) {
+            e.printStackTrace();
             LOG.error("XML解析出现异常", e);
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.error("其他异常", e);
         } finally {
             try {
@@ -117,9 +120,11 @@ public final class MessageUtil {
                     inputStream.close();
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 LOG.error("IO出现异常", e);
             }
         }
+
         return map;
     }
 
