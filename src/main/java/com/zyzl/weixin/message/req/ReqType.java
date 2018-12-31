@@ -9,7 +9,7 @@ public final class ReqType {
     public static final String VOICE       = "voice";
     public static final String VIDEO       = "video";
     public static final String SHORT_VIDEO = "shortvideo";
-    public static final String EVENT       = "events";
+    public static final String EVENT       = "event";
     public static final String MUSIC       = "music";
     public static final String NEWS        = "news";
 
