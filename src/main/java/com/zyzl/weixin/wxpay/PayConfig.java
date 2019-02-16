@@ -5,13 +5,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class YslPayConfig extends WXPayConfig{
+public class PayConfig extends WXPayConfig{
 
     private byte[] certData;
 
-    public YslPayConfig() {
+    private String appId;
+    private String mchID;
+    private String certPath;
+    private String key;
+
+    public PayConfig(String appId,String mchID,String certPath,String key) {
+        this.appId=appId;
+        this.mchID=mchID;
+        this.certPath=certPath;
+        this.key=key;
         try {
-            String certPath = "/home/server/ysl/ysl-data/cert/apiclient_cert.p12";
             File file = new File(certPath);
             InputStream certStream = new FileInputStream(file);
             this.certData = new byte[(int) file.length()];
@@ -24,15 +32,16 @@ public class YslPayConfig extends WXPayConfig{
     }
 
     public String getAppID() {
-        return "wx922bd7dfe74f7110";
+        return this.appId;
     }
 
     public String getMchID() {
-        return "1504533201";
+        return this.mchID;
     }
 
+
     public String getKey() {
-        return "incncn87675cjdj2ijkaduvajjd8763c";
+        return this.key;
     }
 
     public InputStream getCertStream() {
