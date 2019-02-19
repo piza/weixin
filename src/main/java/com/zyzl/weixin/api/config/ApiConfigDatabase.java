@@ -162,7 +162,7 @@ public final class ApiConfigDatabase extends Observable implements ApiConfig {
                     tokenData.setAccessToken(response.getAccessToken());
                     //设置通知点
                     setChanged();
-                    notifyObservers(new ConfigChangeNotice(tokenData.getAppid(), ChangeType.ACCESS_TOKEN, tokenData.getAccessToken()));
+                    notifyObservers(tokenData);
                 }
             }
         });
@@ -197,7 +197,7 @@ public final class ApiConfigDatabase extends Observable implements ApiConfig {
                     tokenData.setJsApiTicket(response.getTicket());
                     //设置通知点
                     setChanged();
-                    notifyObservers(new ConfigChangeNotice(tokenData.getAppid(), ChangeType.JS_TOKEN, tokenData.getJsApiTicket()));
+                    notifyObservers(tokenData);
                 }
             }
         });
