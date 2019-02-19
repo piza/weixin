@@ -3,7 +3,6 @@ package com.zyzl.weixin.api.config;
 import com.zyzl.weixin.api.response.GetJsApiTicketResponse;
 import com.zyzl.weixin.api.response.GetTokenResponse;
 import com.zyzl.weixin.exception.WeixinException;
-import com.zyzl.weixin.handle.ApiConfigChangeHandle;
 import com.zyzl.weixin.util.JSONUtil;
 import com.zyzl.weixin.util.NetWorkCenter;
 import com.zyzl.weixin.util.StrUtil;
@@ -12,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -67,6 +67,18 @@ public final class ApiConfigMemeory extends Observable implements ApiConfig {
         long now = System.currentTimeMillis();
         initToken(now);
         if (enableJsApi) initJSToken(now);
+    }
+
+    @Override
+    public void init() {
+        long now = System.currentTimeMillis();
+        initToken(now);
+        if (enableJsApi) initJSToken(now);
+    }
+
+    @Override
+    public void checkExpired() {
+
     }
 
     public String getAppid() {
@@ -139,7 +151,7 @@ public final class ApiConfigMemeory extends Observable implements ApiConfig {
      *
      * @param handle 监听器
      */
-    public void addHandle(final ApiConfigChangeHandle handle) {
+    public void addHandle( Observer handle) {
         super.addObserver(handle);
     }
 
@@ -148,7 +160,7 @@ public final class ApiConfigMemeory extends Observable implements ApiConfig {
      *
      * @param handle 监听器
      */
-    public void removeHandle(final ApiConfigChangeHandle handle) {
+    public void removeHandle(Observer handle) {
         super.deleteObserver(handle);
     }
 

@@ -1,8 +1,7 @@
 package com.zyzl.weixin.api.config;
 
-import com.zyzl.weixin.handle.ApiConfigChangeHandle;
-
 import java.io.Serializable;
+import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -14,6 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public interface ApiConfig extends Serializable {
 
+    void init();
+    void checkExpired();
     String getAppid();
     String getSecret();
     String getAccessToken();
@@ -24,14 +25,14 @@ public interface ApiConfig extends Serializable {
 
     void setEnableJsApi(boolean enableJsApi);
 
-    void addHandle(ApiConfigChangeHandle handle);
+    void addHandle(Observer handle);
 
     /**
      * 移除配置变化监听器
      *
      * @param handle 监听器
      */
-    void removeHandle(final ApiConfigChangeHandle handle);
+    void removeHandle(Observer handle);
 
     /**
      * 移除所有配置变化监听器

@@ -3,7 +3,6 @@ package com.zyzl.weixin.api.config;
 import com.zyzl.weixin.api.response.GetJsApiTicketResponse;
 import com.zyzl.weixin.api.response.GetTokenResponse;
 import com.zyzl.weixin.exception.WeixinException;
-import com.zyzl.weixin.handle.ApiConfigChangeHandle;
 import com.zyzl.weixin.util.JSONUtil;
 import com.zyzl.weixin.util.NetWorkCenter;
 import com.zyzl.weixin.util.StrUtil;
@@ -12,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -29,8 +29,57 @@ public final class ApiConfigDatabase extends Observable implements ApiConfig {
 
     private TokenData tokenData;
 
-    public ApiConfigDatabase (TokenData tokenData){
+    public ApiConfigDatabase (TokenData tokenData,Observer observer){
         this.tokenData=tokenData;
+        super.addObserver(observer);
+    }
+
+    @Override
+    public void init() {
+        long now = System.currentTimeMillis();
+        initToken(now);
+        if (tokenData.isEnableJsApi()) initJSToken(now);
+    }
+
+    @Override
+    public void checkExpired() {
+        if(logger.isInfoEnabled()){
+            logger.info("[getAccessToken]");
+        }
+        long now = System.currentTimeMillis();
+        long time = now - this.tokenData.getWeixinTokenStartTime();
+        try {
+            /*
+             * 判断优先顺序：
+             * 1.官方给出的超时时间是7200秒，这里用7100秒来做，防止出现已经过期的情况
+             * 2.刷新标识判断，如果已经在刷新了，则也直接跳过，避免多次重复刷新，如果没有在刷新，则开始刷新
+             */
+
+            if (time > 7100000 && this.tokenRefreshing.compareAndSet(false, true)) {
+                if (logger.isWarnEnabled()) {
+                    logger.warn("准备刷新token.............appId is "+tokenData.getAppid());
+                }
+                initToken(now);
+            }
+        } catch (Exception e) {
+            logger.warn("刷新Token出错.", e);
+            //刷新工作出现有异常，将标识设置回false
+            this.tokenRefreshing.set(false);
+        }
+
+        if (tokenData.isEnableJsApi()) {
+             now = System.currentTimeMillis();
+            try {
+                //官方给出的超时时间是7200秒，这里用7100秒来做，防止出现已经过期的情况
+                if (now - this.tokenData.getJsTokenStartTime() > 7100000 && this.jsRefreshing.compareAndSet(false, true)) {
+                    initJSToken(now);
+                }
+            } catch (Exception e) {
+                logger.warn("刷新jsTicket出错.", e);
+                //刷新工作出现有异常，将标识设置回false
+                this.jsRefreshing.set(false);
+            }
+        }
     }
 
     public String getAppid() {
@@ -62,7 +111,7 @@ public final class ApiConfigDatabase extends Observable implements ApiConfig {
      *
      * @param handle 监听器
      */
-    public void addHandle(final ApiConfigChangeHandle handle) {
+    public void addHandle(Observer handle) {
         super.addObserver(handle);
     }
 
@@ -71,7 +120,7 @@ public final class ApiConfigDatabase extends Observable implements ApiConfig {
      *
      * @param handle 监听器
      */
-    public void removeHandle(final ApiConfigChangeHandle handle) {
+    public void removeHandle(Observer handle) {
         super.deleteObserver(handle);
     }
 
