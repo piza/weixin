@@ -5,9 +5,11 @@ import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * API配置类，项目中请保证其为单例
+ * API配置接口，项目中请保证其为单例
  * 实现观察者模式，用于监控token变化
- *
+ * 共有两个实现类，一个是单机版，一个是分布式版
+ * 单机版把token保存在内存里面 ApiConfigMemory
+ * 分布式版把token保存在数据库里面 ApiConfigDatabase
  * @author peter
  * @since 1.2
  */

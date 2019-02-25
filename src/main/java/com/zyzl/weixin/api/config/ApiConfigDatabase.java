@@ -15,9 +15,9 @@ import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * API配置类，项目中请保证其为单例
- * 实现观察者模式，用于监控token变化
- *
+ * 用于分布式项目
+ *  利用观察者模式，当token变化的时候，就通知观察者，观察者去保存到数据库中
+ *  分布式系统每次都从数据库里面读取 TokenData， 如果没有或者过期，就更新token。
  * @author peter
  * @since 1.2
  */
