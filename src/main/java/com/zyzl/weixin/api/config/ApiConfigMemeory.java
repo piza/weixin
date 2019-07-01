@@ -256,4 +256,17 @@ public final class ApiConfigMemeory extends Observable implements ApiConfig {
     public AtomicBoolean getTokenRefreshing() {
         return tokenRefreshing;
     }
+
+    @Override
+    public TokenData getTokenData() {
+        TokenData tokenData=new TokenData();
+        tokenData.setSecret(this.secret);
+        tokenData.setEnableJsApi(this.enableJsApi);
+        tokenData.setAppid(this.appid);
+        tokenData.setJsApiTicket(this.jsApiTicket);
+        tokenData.setAccessToken(this.accessToken);
+        tokenData.setWeixinTokenStartTime(this.weixinTokenStartTime);
+        tokenData.setJsTokenStartTime(this.jsTokenStartTime);
+        return tokenData;
+    }
 }

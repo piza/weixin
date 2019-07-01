@@ -207,4 +207,9 @@ public final class ApiConfigCloud extends Observable implements ApiConfig {
     public AtomicBoolean getTokenRefreshing() {
         return tokenRefreshing;
     }
+
+    @Override
+    public TokenData getTokenData() {
+        return this.tokenData;
+    }
 }

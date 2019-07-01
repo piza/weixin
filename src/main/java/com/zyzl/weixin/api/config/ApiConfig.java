@@ -47,4 +47,6 @@ public interface ApiConfig extends Serializable {
     long getJsTokenStartTime();
 
     AtomicBoolean getTokenRefreshing();
+
+    TokenData getTokenData();
 }
