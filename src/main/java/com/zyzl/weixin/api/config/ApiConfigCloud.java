@@ -137,13 +137,13 @@ public final class ApiConfigCloud extends Observable implements ApiConfig {
         //记住原本的时间，用于出错回滚
         final long oldTime = this.tokenData.getWeixinTokenStartTime();
         this.tokenData.setWeixinTokenStartTime(refreshTime);
-        NetWorkCenter.get(masterUrl, null, new NetWorkCenter.ResponseCallback() {
+        NetWorkCenter.get(masterUrl+this.tokenData.getOriginalId(), null, new NetWorkCenter.ResponseCallback() {
             @Override
             public void onResponse(int resultCode, String resultJson) {
                 if (HttpStatus.SC_OK == resultCode) {
                     TokenData remoteData = JSONUtil.toBean(resultJson, TokenData.class);
                     if (logger.isInfoEnabled()) {
-                        logger.info("[initToken] url is "+masterUrl);
+                        logger.info("[initToken] url is "+masterUrl+tokenData.getOriginalId());
                         logger.info("[access_token]:{}", remoteData.getAccessToken());
                     }
                     if (null == remoteData.getAccessToken()) {
@@ -173,7 +173,7 @@ public final class ApiConfigCloud extends Observable implements ApiConfig {
         //记住原本的时间，用于出错回滚
         final long oldTime = this.tokenData.getJsTokenStartTime();
         this.tokenData.setJsTokenStartTime(refreshTime);
-        NetWorkCenter.get(masterUrl, null, new NetWorkCenter.ResponseCallback() {
+        NetWorkCenter.get(masterUrl+tokenData.getOriginalId(), null, new NetWorkCenter.ResponseCallback() {
             @Override
             public void onResponse(int resultCode, String resultJson) {
                 if (HttpStatus.SC_OK == resultCode) {

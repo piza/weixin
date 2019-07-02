@@ -9,6 +9,15 @@ public class TokenData {
     private boolean enableJsApi;
     private long jsTokenStartTime;
     private long weixinTokenStartTime;
+    private String originalId;
+
+    public String getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(String originalId) {
+        this.originalId = originalId;
+    }
 
     public String getAppid() {
         return appid;
