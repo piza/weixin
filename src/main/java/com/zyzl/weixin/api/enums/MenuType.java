@@ -16,6 +16,10 @@ public enum MenuType {
      * 跳转URL
      */
     VIEW("view"),
+    /**
+     * 跳转小程序
+     */
+    MINIPROGRAM("miniprogram"),
 
     /*-------------------------以下仅支持微信iPhone5.4.1以上版本，和Android5.4以上版本的微信用户------------------------*/
 

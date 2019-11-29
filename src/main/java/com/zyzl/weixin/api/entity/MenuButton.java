@@ -39,6 +39,25 @@ public class MenuButton extends BaseModel {
     @JSONField(name = "media_id")
     private String mediaId;
 
+    private String appid;
+    private String pagepath;
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
+
+    public String getPagepath() {
+        return pagepath;
+    }
+
+    public void setPagepath(String pagepath) {
+        this.pagepath = pagepath;
+    }
+
     /**
      * 二级菜单列表，每个一级菜单下最多5个
      */
