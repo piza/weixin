@@ -1,6 +1,8 @@
 package com.zyzl.weixin.bean;
 
-public class WechatCommonResponse {
+import java.io.Serializable;
+
+public class WechatCommonResponse implements Serializable {
 
     private String jsonResult;
     private String errcode;

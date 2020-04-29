@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
+import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,7 +23,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * 交易保障
  */
-public class WXPayReport {
+public class WXPayReport implements Serializable {
 
     public static class ReportInfo {
 

@@ -19,13 +19,14 @@ import org.apache.http.util.EntityUtils;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 
 
-public class WXPayRequest {
+public class WXPayRequest implements Serializable {
     private WXPayConfig config;
     public WXPayRequest(WXPayConfig config) throws Exception{
 

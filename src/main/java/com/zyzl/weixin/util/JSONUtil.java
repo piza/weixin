@@ -3,7 +3,9 @@ package com.zyzl.weixin.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.codehaus.jackson.map.ObjectMapper;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static com.zyzl.weixin.util.BeanUtil.requireNonNull;
@@ -22,6 +24,8 @@ public final class JSONUtil {
     public static final SerializerFeature[] DEFAULT_FORMAT = {SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteEnumUsingToString,
             SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.QuoteFieldNames, SerializerFeature.SkipTransientField,
             SerializerFeature.SortField, SerializerFeature.PrettyFormat};
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     private JSONUtil() {
     }
@@ -109,4 +113,15 @@ public final class JSONUtil {
         return getJSONFromString(jsonString);
     }
 
+    public static String obj2String(Object obj){
+        try {
+            if(obj==null){
+                return null ;
+            }
+            return mapper.writeValueAsString(obj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -3,10 +3,11 @@ package com.zyzl.weixin.wxpay;
 
 import com.zyzl.weixin.wxpay.WXPayConstants.SignType;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WXPay {
+public class WXPay implements Serializable {
 
     private WXPayConfig config;
     private SignType signType;

@@ -1,8 +1,9 @@
 package com.zyzl.weixin.wxpay;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
-public abstract class WXPayConfig {
+public abstract class WXPayConfig implements Serializable {
 
 
 
