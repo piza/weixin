@@ -2,6 +2,7 @@ package com.zyzl.weixin.util;
 
 import com.zyzl.weixin.api.response.BaseResponse;
 import com.zyzl.weixin.util.StrUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -108,12 +109,19 @@ public final class NetWorkCenter {
         doRequest(RequestMethod.POST, url, paramData, fileList, callback);
     }
 
-    public static BaseResponse post(String url, String paramData, List<File> fileList) {
+    public static BaseResponse post(final String url, String paramData, List<File> fileList) {
         final BaseResponse[] response = new BaseResponse[]{null};
         post(url, paramData, fileList, new ResponseCallback() {
             @Override
             public void onResponse(int resultCode, String resultJson) {
                 if (200 == resultCode) {
+                    if(url.contains("createwxaqrcode")){
+                        BaseResponse br=new BaseResponse();
+                        br.setErrcode("0");
+                        br.setErrmsg(resultJson);
+                        response[0] = br;
+                        return;
+                    }
                     BaseResponse r = JSONUtil.toBean(resultJson, BaseResponse.class);
                     if(com.zyzl.weixin.util.StrUtil.isBlank(r.getErrcode())) {
                         r.setErrcode("0");
@@ -268,6 +276,16 @@ public final class NetWorkCenter {
 //            OutputStream os = new ByteArrayOutputStream();
 //            entity.writeTo(os);
 //            String resultJson = os.toString();
+            if(url.contains("createwxaqrcode")){
+                LOG.debug("生成小程序码");
+                byte[] content = EntityUtils.toByteArray(entity);
+                String base64Code = new String(Base64.encodeBase64(content));
+                if (haveCallback) {
+                    callback.onResponse(resultCode, base64Code);
+                }
+                return;
+
+            }
             String resultJson = EntityUtils.toString(entity, UTF_8);
             //返回码200，请求成功；其他情况都为请求出现错误
             if (HttpStatus.SC_OK == resultCode) {
