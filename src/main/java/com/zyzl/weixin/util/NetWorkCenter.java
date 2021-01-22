@@ -115,7 +115,7 @@ public final class NetWorkCenter {
             @Override
             public void onResponse(int resultCode, String resultJson) {
                 if (200 == resultCode) {
-                    if(url.contains("createwxaqrcode")){
+                    if(url.contains("createwxaqrcode") || url.contains("getwxacodeunlimit")){
                         BaseResponse br=new BaseResponse();
                         br.setErrcode("0");
                         br.setErrmsg(resultJson);
@@ -276,7 +276,7 @@ public final class NetWorkCenter {
 //            OutputStream os = new ByteArrayOutputStream();
 //            entity.writeTo(os);
 //            String resultJson = os.toString();
-            if(url.contains("createwxaqrcode")){
+            if(url.contains("createwxaqrcode") || url.contains("getwxacodeunlimit")){
                 LOG.debug("生成小程序码");
                 byte[] content = EntityUtils.toByteArray(entity);
                 String base64Code = new String(Base64.encodeBase64(content));
